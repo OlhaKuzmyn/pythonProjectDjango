@@ -17,3 +17,4 @@ class FirstView(APIView):
 
     def delete(self, request):
         return Response('Method DELETE')
+
