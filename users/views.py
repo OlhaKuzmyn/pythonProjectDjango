@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 
 class UsersListCreateView(APIView):
-    def get(self, request):
+    def get(self, *args, **kwargs):
         try:
             with open('users.json') as file:
                 return Response(json.loads(file.read()))
@@ -14,7 +14,7 @@ class UsersListCreateView(APIView):
         finally:
             file.close()
 
-    def post(self, request):
+    def post(self, *args, **kwargs):
         try:
             with open('users.json', 'r') as file:
                 file_read = json.loads(file.read())
