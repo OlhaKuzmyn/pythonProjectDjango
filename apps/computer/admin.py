@@ -1,3 +1,7 @@
 from django.contrib import admin
+from apps.computer.models import ComputerModel
 
-# Register your models here.
+
+@admin.register(ComputerModel)
+class ComputerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'brand', 'ram', 'display_size')
