@@ -23,10 +23,10 @@ class ComputerListCreateView(APIView):
 
 class ComputerUpdateRetrieveDestroyView(APIView):
     def get(self, *args, **kwargs):
-        computer_id = kwargs.get('pk')
-        if not ComputerModel.objects.filter(pk=computer_id).exists():
+        pk = kwargs.get('pk')
+        if not ComputerModel.objects.filter(pk=pk).exists():
             return Response('Computer not found!', status.HTTP_404_NOT_FOUND)
-        computer = ComputerModel.objects.get(pk=computer_id)
+        computer = ComputerModel.objects.get(pk=pk)
         serializer = ComputerSerializer(computer)
         return Response(serializer.data, status.HTTP_200_OK)
 
