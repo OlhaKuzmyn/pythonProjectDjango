@@ -48,10 +48,10 @@ INSTALLED_APPS = [
     "corsheaders",
 
     # Apps
-    'apps.auth'
+    'apps.auth',
     'apps.autoparks',
     'apps.cars',
-    'apps.users'
+    'apps.users',
 ]
 
 MIDDLEWARE = [
