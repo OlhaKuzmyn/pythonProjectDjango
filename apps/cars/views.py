@@ -1,4 +1,5 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny
 
 from .models import CarModel
 from .serializers import CarSerializer
@@ -7,6 +8,7 @@ from .serializers import CarSerializer
 class CarListCreateView(ListCreateAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         autoParkId = self.request.query_params.get('autoParkId')
@@ -18,3 +20,4 @@ class CarListCreateView(ListCreateAPIView):
 class CarRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
+    permission_classes = (AllowAny,)
