@@ -10,6 +10,7 @@ class CarListCreateView(ListAPIView):
     serializer_class = CarSerializer
     # permission_classes = (AllowAny,)
     permission_classes = (IsAdminUser,)
+
     def get_queryset(self):
         autoParkId = self.request.query_params.get('autoParkId')
         if autoParkId:

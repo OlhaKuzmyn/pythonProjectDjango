@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 
-from rest_framework.generics import ListCreateAPIView, UpdateAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import ListCreateAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny, IsAdminUser
 from permissions.user_permissions import IsSuperUser
 from .serializers import AddAvatarSerializer, UserSerializer, ChangeSuperAdminUser
 
@@ -21,10 +21,16 @@ class AddAvatarView(UpdateAPIView):
         return self.request.user.profile
 
 
-class ChangeSuperAdminUserView(UpdateAPIView):
+class UserRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = ChangeSuperAdminUser
-    permission_classes = IsSuperUser
+    queryset = UserModel.objects.all()
+    permission_classes = (IsSuperUser,)
 
-    def get_object(self):
-        return self.request.user
 
+
+# class ChangeSuperAdminUserView(UpdateAPIView):
+#     serializer_class = ChangeSuperAdminUser
+#     permission_classes = (IsSuperUser,)
+#
+#     def get_object(self):
+#         return self.request.user

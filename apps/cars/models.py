@@ -16,8 +16,8 @@ class CarModel(models.Model):
     price = models.IntegerField(validators=[RegexValidator(RegEx.PRICE.pattern, RegEx.PRICE.msg)])
     year = models.IntegerField(
         validators=[MaxValueValidator(date.today().year),
-                    MinValueValidator(date.today().year-20)],
-        error_messages='car should be be of a current year or maximum 20 years old'
+                    MinValueValidator(date.today().year - 20)],
+        error_messages={'incorrect value': 'car should be be of a current year or maximum 20 years old'}  # doesnt work
     )
     auto_park = models.ForeignKey(AutoParkModel, on_delete=models.CASCADE, related_name='cars')
     created = models.DateTimeField(auto_now_add=True)
