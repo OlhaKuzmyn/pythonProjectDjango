@@ -22,6 +22,12 @@ class AddAvatarSerializer(ModelSerializer):
         fields = ('avatar',)
 
 
+class ChangeSuperAdminUser(ModelSerializer):
+    class Meta:
+        model = UserModel
+        fields = ('is_staff', 'is_superuser')
+
+
 class UserSerializer(ModelSerializer):
     profile = ProfileSerializer()
 
