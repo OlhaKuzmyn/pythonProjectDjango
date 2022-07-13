@@ -27,10 +27,3 @@ class UserRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsSuperUser,)
 
 
-
-# class ChangeSuperAdminUserView(UpdateAPIView):
-#     serializer_class = ChangeSuperAdminUser
-#     permission_classes = (IsSuperUser,)
-#
-#     def get_object(self):
-#         return self.request.user
