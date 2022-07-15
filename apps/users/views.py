@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 
 from rest_framework.generics import ListCreateAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny, IsAdminUser
-from permissions.user_permissions import IsSuperUser
+from rest_framework.permissions import AllowAny
+from core.permissions import IsSuperUser
 from .serializers import AddAvatarSerializer, UserSerializer, ChangeSuperAdminUser
 
 UserModel = get_user_model()
