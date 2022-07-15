@@ -4,7 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 
 from core.enums.template_enum import TemplateEnum
-from core.services.jwt_service import JwtService
+from core.services.jwt_service import JwtService, JwtServiceRecovery
 
 
 class EmailService:
@@ -21,3 +21,9 @@ class EmailService:
         token = JwtService.create_token(user)
         url = f'{os.environ.get("FRONTEND_URL")}/activate/{token}'
         cls._send_email(user.email, TemplateEnum.REGISTER.value, {'name': user.profile.name, 'link': url})
+
+    @classmethod
+    def reset_password(cls, user):
+        token = JwtServiceRecovery.create_token(user)
+        url = f'{os.environ.get("FRONTEND_URL")}/reset/{token}'
+        cls._send_email(user.email, TemplateEnum.RESET.value, {'name': user.profile.name, 'link': url})

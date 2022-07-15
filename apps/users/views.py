@@ -6,6 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from core.permissions import IsSuperUser
+from core.services.email_service import EmailService
 
 from .serializers import AddAvatarSerializer, ChangeSuperAdminUser, UserSerializer
 
@@ -16,12 +17,6 @@ class UserListCreateView(ListCreateAPIView):
     serializer_class = UserSerializer
     queryset = UserModel.objects.all()
     permission_classes = (AllowAny,)
-
-    def get_queryset(self):
-        email = self.request.query_params.get('email')
-        if email:
-            return self.queryset.filter(email=email)
-        return super().get_queryset()
 
 
 class AddAvatarView(UpdateAPIView):
@@ -59,3 +54,28 @@ class AdminToUserView(UserToAdminView):  # copied from 5th hw
             user.save()
         serializer = self.serializer_class(user)
         return Response(serializer.data, status.HTTP_200_OK)
+
+
+# class CheckEmailView(UserListCreateView):
+#     # serializer_class = CheckEmailSerializer
+#
+#     def get_queryset(self):
+#         email = self.request.query_params.get('email')
+#         user_by_email = self.queryset.filter(email=email)
+#         if user_by_email:
+#             return user_by_email
+#         return Response('Not found', status.HTTP_404_NOT_FOUND)
+#
+class CheckEmailView(GenericAPIView):
+    queryset = UserModel
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny,)
+    lookup_field = 'email'
+
+    def get(self, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.serializer_class(user)
+        EmailService.reset_password(user)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+

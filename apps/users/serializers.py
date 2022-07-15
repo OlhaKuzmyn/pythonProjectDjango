@@ -68,4 +68,25 @@ class UserSerializer(ModelSerializer):
         EmailService.register_email(user)
         return user
 
-# class
+
+# class CheckEmailSerializer(ModelSerializer):
+#     profile = ProfileSerializer()
+#
+#     class Meta:
+#         model = UserModel
+#         fields = (
+#             'id', 'email', 'password', 'is_staff', 'is_superuser', 'is_active', 'last_login', 'created_at',
+#             'updated_at', 'profile'
+#         )
+#         read_only_fields = ('id', 'is_staff', 'is_superuser', 'is_active', 'last_login', 'created_at',
+#                             'updated_at', 'profile')
+#         extra_kwargs = {
+#             'password': {
+#                 'write_only': True
+#             }
+#         }
+#
+#     @transaction.atomic
+#     def get(self, retrieved_user):
+#         EmailService.reset_password(retrieved_user)
+#         return retrieved_user
