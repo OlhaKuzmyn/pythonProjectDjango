@@ -17,6 +17,12 @@ class UserListCreateView(ListCreateAPIView):
     queryset = UserModel.objects.all()
     permission_classes = (AllowAny,)
 
+    def get_queryset(self):
+        email = self.request.query_params.get('email')
+        if email:
+            return self.queryset.filter(email=email)
+        return super().get_queryset()
+
 
 class AddAvatarView(UpdateAPIView):
     serializer_class = AddAvatarSerializer
