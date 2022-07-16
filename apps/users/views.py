@@ -7,8 +7,9 @@ from rest_framework.response import Response
 
 from core.permissions import IsSuperUser
 from core.services.email_service import EmailService
+from core.services.jwt_service import JwtServiceRecovery
 
-from .serializers import AddAvatarSerializer, ChangeSuperAdminUser, UserSerializer
+from .serializers import AddAvatarSerializer, ChangeSuperAdminUser, ResetPasswordSerializer, UserSerializer
 
 UserModel = get_user_model()
 
@@ -79,3 +80,15 @@ class CheckEmailView(GenericAPIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
+class ResetPasswordView(GenericAPIView):  # using post
+    permission_classes = (AllowAny,)
+    serializer_class = ResetPasswordSerializer
+
+    def post(self, *args, **kwargs):
+        new_password = self.request.data
+        serializer = self.serializer_class(new_password)
+        token = kwargs.get('token')
+        user = JwtServiceRecovery.validate_token(token)
+        user.set_password(serializer.data.get('password'))
+        user.save()
+        return Response(status.HTTP_200_OK)

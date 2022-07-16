@@ -17,7 +17,7 @@ class ActivateUserView(GenericAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ResetPasswordView(GenericAPIView):
+class ResetPasswordView(GenericAPIView):  # using url
     permission_classes = (AllowAny,)
 
     def get(self, *args, **kwargs):

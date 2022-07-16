@@ -69,6 +69,18 @@ class UserSerializer(ModelSerializer):
         return user
 
 
+class ResetPasswordSerializer(ModelSerializer):
+    class Meta:
+        model = UserModel
+        fields = ('password',)
+
+    def validate(self, attrs):
+        email = attrs['email']
+        password = attrs['password']
+        if email == password:
+            raise ValidationError({'email_eq_password': 'email equal password'})
+        return attrs
+
 # class CheckEmailSerializer(ModelSerializer):
 #     profile = ProfileSerializer()
 #
