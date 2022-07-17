@@ -24,4 +24,7 @@ urlpatterns = [
     path('auth', include('apps.auth.urls'))
 ]
 
+handler500 = 'rest_framework.exceptions.server_error'
+handler400 = 'rest_framework.exceptions.bad_request'
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

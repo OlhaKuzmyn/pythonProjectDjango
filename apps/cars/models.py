@@ -11,6 +11,7 @@ from .enums import RegEx
 class CarModel(models.Model):
     class Meta:
         db_table = 'cars'
+        ordering = ['id']
 
     brand = models.CharField(max_length=100, validators=[RegexValidator(RegEx.BRAND.pattern, RegEx.BRAND.msg)])
     price = models.IntegerField(validators=[RegexValidator(RegEx.PRICE.pattern, RegEx.PRICE.msg)])

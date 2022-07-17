@@ -69,36 +69,7 @@ class UserSerializer(ModelSerializer):
         return user
 
 
-class ResetPasswordSerializer(ModelSerializer):
-    class Meta:
-        model = UserModel
-        fields = ('password',)
 
-    def validate(self, attrs):
-        email = attrs['email']
-        password = attrs['password']
-        if email == password:
-            raise ValidationError({'email_eq_password': 'email equal password'})
-        return attrs
 
-# class CheckEmailSerializer(ModelSerializer):
-#     profile = ProfileSerializer()
-#
-#     class Meta:
-#         model = UserModel
-#         fields = (
-#             'id', 'email', 'password', 'is_staff', 'is_superuser', 'is_active', 'last_login', 'created_at',
-#             'updated_at', 'profile'
-#         )
-#         read_only_fields = ('id', 'is_staff', 'is_superuser', 'is_active', 'last_login', 'created_at',
-#                             'updated_at', 'profile')
-#         extra_kwargs = {
-#             'password': {
-#                 'write_only': True
-#             }
-#         }
-#
-#     @transaction.atomic
-#     def get(self, retrieved_user):
-#         EmailService.reset_password(retrieved_user)
-#         return retrieved_user
+
+

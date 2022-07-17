@@ -6,10 +6,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from core.permissions import IsSuperUser
-from core.services.email_service import EmailService
-from core.services.jwt_service import JwtServiceRecovery
 
-from .serializers import AddAvatarSerializer, ChangeSuperAdminUser, ResetPasswordSerializer, UserSerializer
+from .serializers import AddAvatarSerializer, ChangeSuperAdminUser, UserSerializer
 
 UserModel = get_user_model()
 
@@ -57,38 +55,7 @@ class AdminToUserView(UserToAdminView):  # copied from 5th hw
         return Response(serializer.data, status.HTTP_200_OK)
 
 
-# class CheckEmailView(UserListCreateView):
-#     # serializer_class = CheckEmailSerializer
-#
-#     def get_queryset(self):
-#         email = self.request.query_params.get('email')
-#         user_by_email = self.queryset.filter(email=email)
-#         if user_by_email:
-#             return user_by_email
-#         return Response('Not found', status.HTTP_404_NOT_FOUND)
-#
-class CheckEmailView(GenericAPIView):
-    queryset = UserModel
-    serializer_class = UserSerializer
-    permission_classes = (AllowAny,)
-    lookup_field = 'email'
-
-    def get(self, *args, **kwargs):
-        user = self.get_object()
-        serializer = self.serializer_class(user)
-        EmailService.reset_password(user)
-        return Response(serializer.data, status.HTTP_200_OK)
 
 
-class ResetPasswordView(GenericAPIView):  # using post
-    permission_classes = (AllowAny,)
-    serializer_class = ResetPasswordSerializer
 
-    def post(self, *args, **kwargs):
-        new_password = self.request.data
-        serializer = self.serializer_class(new_password)
-        token = kwargs.get('token')
-        user = JwtServiceRecovery.validate_token(token)
-        user.set_password(serializer.data.get('password'))
-        user.save()
-        return Response(status.HTTP_200_OK)
+
