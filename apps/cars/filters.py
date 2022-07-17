@@ -10,8 +10,12 @@ class CarFilter(filters.FilterSet):
     brand_start = filters.CharFilter(field_name='brand', lookup_expr='istartswith')
     brand_end = filters.CharFilter(field_name='brand', lookup_expr='iendswith')
     brand_contain = filters.CharFilter(field_name='brand', lookup_expr='icontains')
-    # cars_year_lt = filters.NumberFilter(field_name='year', lookup_expr='lt',)
+
+    # cars_year_lt = filters.ModelMultipleChoiceFilter(field_name='year', to_field_name='auto_park', lookup_expr='lt', queryset=CarModel.objects.all())
 
     class Meta:
         model = CarModel
-        fields = ('price', 'brand')
+        fields = (
+            'price', 'brand',
+            # 'year', 'auto_park'
+        )

@@ -16,7 +16,7 @@ class CarListCreateView(ListAPIView):
     filterset_class = CarFilter
 
     def get_queryset(self):
-        # self.queryset.filter(brand__icontains=)
+        # self.queryset.filter(auto_park=)
         autoParkId = self.request.query_params.get('autoParkId')
         if autoParkId:
             return self.queryset.filter(auto_park=autoParkId)
