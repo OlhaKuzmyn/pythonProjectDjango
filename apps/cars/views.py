@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from core.permissions import IsSuperUser
 
@@ -12,7 +12,8 @@ class CarListCreateView(ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
     # permission_classes = (AllowAny,)
-    permission_classes = (IsAdminUser,)
+    # permission_classes = (IsAdminUser,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     filterset_class = CarFilter
 
     def get_queryset(self):
@@ -26,5 +27,6 @@ class CarListCreateView(ListAPIView):
 class CarRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
-    # permission_classes = (IsAuthenticatedOrReadOnly,)
-    permission_classes = (IsSuperUser,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    # permission_classes = (IsSuperUser,)
+    # permission_classes = (AllowAny,)

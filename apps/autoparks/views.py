@@ -12,6 +12,7 @@ class AutoParkListCreateView(ListCreateAPIView):
     queryset = AutoParkModel.objects.all()
     serializer_class = AutoParkSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    # permission_classes = (AllowAny,)
     filterset_class = AutoParkFilter
     # def get_queryset(self):
     #     self.queryset.filter(cars__year__lt=)
