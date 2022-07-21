@@ -14,7 +14,11 @@ UserModel = get_user_model()
 
 
 class ActivateUserView(GenericAPIView):
+    """Activate user by email"""
     permission_classes = (AllowAny,)
+
+    def get_serializer(self, *args, **kwargs):
+        pass
 
     def get(self, *args, **kwargs):
         token = kwargs.get('token')
@@ -26,10 +30,11 @@ class ActivateUserView(GenericAPIView):
 
 class CheckEmailView(GenericAPIView):
     permission_classes = (AllowAny,)
+    serializer_class = EmailSerializer
 
     def post(self, *args, **kwargs):
         email = self.request.data
-        serializer = EmailSerializer(data=email)
+        serializer = self.serializer_class(data=email)
         serializer.is_valid(raise_exception=True)
         user_email = serializer.data.get('email')
         user = get_object_or_404(UserModel, email=user_email)
@@ -39,10 +44,11 @@ class CheckEmailView(GenericAPIView):
 
 class ResetPasswordView(GenericAPIView):
     permission_classes = (AllowAny,)
+    serializer_class = ResetPasswordSerializer
 
     def post(self, *args, **kwargs):
         data = self.request.data
-        serializer = ResetPasswordSerializer(data=data)
+        serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
         token = kwargs.get('token')
         user = JwtService.validate_token(token, RecoveryToken)
