@@ -1,7 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
-
-from core.permissions import IsSuperUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .filters import CarFilter
 from .models import CarModel

@@ -9,9 +9,12 @@ mysqlclient = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
-django-dotenv = "*"
 django-filter = "*"
 drf-yasg2 = "*"
+celery = "*"
+redis = "*"
+django-celery-results = "*"
+django-celery-beat = "*"
 
 [dev-packages]
 isort = "*"
