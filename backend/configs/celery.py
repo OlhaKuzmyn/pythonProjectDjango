@@ -14,6 +14,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "send_spam_every_minute": {
         'task': 'core.services.email_service.spam',
-        'schedule': crontab()
+        # 'args': (),
+        'schedule': crontab()  # google crontab
     }
 }

@@ -1,16 +1,18 @@
+from django.conf.urls.static import static
 from django.urls import include, path
 
+from configs import settings
 from drf_yasg2 import openapi
 from drf_yasg2.views import get_schema_view
 
 from rest_framework.permissions import AllowAny
 
-app_name = 'v1'
+app_name = 'v2'
 
 schema_view = get_schema_view(
     openapi.Info(
         title="Autoparks API",
-        default_version='v1',
+        default_version='v2',
         description="About cars",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="contact@snippets.local"),
@@ -21,9 +23,6 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('/cars', include('apps.cars.urls')),
-    path('/autoparks', include('apps.autoparks.urls')),
-    path('/users', include('apps.users.urls')),
     path('/auth', include('apps.auth.urls')),
     path('/doc', schema_view.with_ui('swagger', cache_timeout=0))
 ]
